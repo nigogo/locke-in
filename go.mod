@@ -3,6 +3,7 @@ module github.com/nigogo/locke-in
 go 1.22.7
 
 require (
+	github.com/a-h/templ v0.2.778 // indirect
 	github.com/bytedance/sonic v1.12.3 // indirect
 	github.com/bytedance/sonic/loader v0.2.1 // indirect
 	github.com/cloudwego/base64x v0.1.4 // indirect

@@ -1,6 +1,8 @@
 package main
 
 import (
+	"github.com/nigogo/locke-in/renderer"
+	"github.com/nigogo/locke-in/views"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -12,6 +14,12 @@ func setupRouter() *gin.Engine {
 	// Disable Console Color
 	// gin.DisableConsoleColor()
 	r := gin.Default()
+
+	r.GET("/", func(c *gin.Context) {
+		// return templ template index.template
+		res := renderer.New(c.Request.Context(), http.StatusOK, views.Index())
+		c.Render(http.StatusOK, res)
+	})
 
 	// Ping test
 	r.GET("/ping", func(c *gin.Context) {
@@ -69,6 +77,7 @@ func setupRouter() *gin.Engine {
 
 func main() {
 	r := setupRouter()
-	// Listen and Server in 0.0.0.0:8080
-	r.Run(":8080")
+	ginHtmlRenderer := r.HTMLRender
+	r.HTMLRender = &renderer.HTMLTemplRenderer{FallbackHtmlRenderer: ginHtmlRenderer}
+	_ = r.Run(":8080")
 }

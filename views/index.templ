@@ -1,0 +1,19 @@
+package views
+
+templ Index() {
+	<html lang="en">
+		<head>
+			<title>Goal Setting</title>
+		</head>
+		<body>
+			<h1>Goal Setting</h1>
+			<form action="/setgoal" method="POST">
+				<label for="goal">Goal:</label>
+				<input type="text" id="goal" name="goal"/>
+				<label for="deadline">Deadline:</label>
+				<input type="date" id="deadline" name="deadline"/>
+				<input type="submit" value="Submit"/>
+			</form>
+		</body>
+	</html>
+}
