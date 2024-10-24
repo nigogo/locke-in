@@ -29,7 +29,7 @@ func Index() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<html><head><title>Goal Setting</title></head><body><h1>Goal Setting</h1><form action=\"/setgoal\" method=\"POST\"><label for=\"goal\">Goal:</label> <input type=\"text\" id=\"goal\" name=\"goal\"> <label for=\"deadline\">Deadline:</label> <input type=\"date\" id=\"deadline\" name=\"deadline\"> <input type=\"submit\" value=\"Submit\"></form></body></html>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<html lang=\"en\"><head><title>Goal Setting</title></head><body><h1>Goal Setting</h1><form action=\"/setgoal\" method=\"POST\"><label for=\"goal\">Achieve this:</label> <input type=\"text\" id=\"goal\" name=\"goal\"> <label for=\"deadline\">By then:</label> <input type=\"date\" id=\"deadline\" name=\"deadline\"> <input type=\"submit\" value=\"Submit\"></form></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

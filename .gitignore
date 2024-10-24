@@ -9,9 +9,11 @@
 # Go build files
 /build/
 *.test
-*.exe
 *.o
 *.a
+
+# Air tmp files
+tmp/
 
 # Dependencies (if using vendoring)
 vendor/
