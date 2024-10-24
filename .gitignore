@@ -1,0 +1,36 @@
+# Binaries
+*.exe
+*.dll
+*.so
+*.dylib
+*.bin
+*.out
+
+# Go build files
+/build/
+*.test
+*.exe
+*.o
+*.a
+
+# Dependencies (if using vendoring)
+vendor/
+
+# IDE and editor-specific files
+.idea/
+.vscode/
+*.swp
+*~
+
+# macOS specific files
+.DS_Store
+
+# Logs and debugging
+*.log
+
+# Coverage files
+coverage.out
+
+# Workspace-related files
+go.work
+go.work.sum
