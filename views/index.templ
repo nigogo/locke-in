@@ -3,17 +3,21 @@ package views
 templ Index() {
 	<html lang="en">
 		<head>
-			<title>Goal Setting</title>
+			<title>LockeIn</title>
+			<meta charset="UTF-8"/>
+			<script src="/assets/htmx.min.js"></script>
 		</head>
-		<body>
-			<h1>Goal Setting</h1>
-			<form action="/setgoal" method="POST">
-				<label for="goal">Achieve this:</label>
-				<input type="text" id="goal" name="goal"/>
-				<label for="deadline">By then:</label>
-				<input type="date" id="deadline" name="deadline"/>
-				<input type="submit" value="Submit"/>
-			</form>
+		<body hx-boost="true">
+			<h1>LockeIn</h1>
+			<div id="app">
+				<form action="/goal" method="post" hx-post="/goal" hx-target="#app" hx-push-url="true">
+					<label for="goal">Achieve this:</label>
+					<input type="text" id="goal" name="goal"/>
+					<label for="deadline">By then:</label>
+					<input type="date" id="deadline" name="deadline"/>
+					<input type="submit" value="Submit"/>
+				</form>
+			</div>
 		</body>
 	</html>
 }

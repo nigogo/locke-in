@@ -11,13 +11,16 @@ import (
 var db = make(map[string]string)
 
 func setupRouter() *gin.Engine {
-	// Disable Console Color
-	// gin.DisableConsoleColor()
 	r := gin.Default()
 
 	r.GET("/", func(c *gin.Context) {
 		// return templ template index.template
 		res := renderer.New(c.Request.Context(), http.StatusOK, views.Index())
+		c.Render(http.StatusOK, res)
+	})
+
+	r.POST("/goal", func(c *gin.Context) {
+		res := renderer.New(c.Request.Context(), http.StatusOK, views.Goal())
 		c.Render(http.StatusOK, res)
 	})
 
@@ -79,5 +82,6 @@ func main() {
 	r := setupRouter()
 	ginHtmlRenderer := r.HTMLRender
 	r.HTMLRender = &renderer.HTMLTemplRenderer{FallbackHtmlRenderer: ginHtmlRenderer}
+	r.Static("/assets", "./assets")
 	_ = r.Run(":8080")
 }
