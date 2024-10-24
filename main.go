@@ -1,8 +1,8 @@
 package main
 
 import (
+	"github.com/nigogo/locke-in/components"
 	"github.com/nigogo/locke-in/renderer"
-	"github.com/nigogo/locke-in/views"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
