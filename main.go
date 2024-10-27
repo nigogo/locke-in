@@ -1,8 +1,12 @@
 package main
 
 import (
+	"encoding/json"
+	"github.com/google/uuid"
 	"github.com/nigogo/locke-in/components"
 	"github.com/nigogo/locke-in/renderer"
+	"github.com/nigogo/locke-in/services"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -20,13 +24,78 @@ func setupRouter() *gin.Engine {
 	})
 
 	r.POST("/goal", func(c *gin.Context) {
-		res := renderer.New(c.Request.Context(), http.StatusOK, views.Goal())
+		println("Creating a new goal")
+
+		var goal services.Goal
+		if err := c.ShouldBind(&goal); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		goalID := uuid.New().String()
+
+		var storedGoal = services.Goal{
+			ID:        goalID,
+			Name:      goal.Name,
+			Deadline:  goal.Deadline,
+			Completed: false,
+		}
+
+		goalJSON, err := json.Marshal(goal)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		db[goalID] = string(goalJSON)
+
+		res := renderer.New(c.Request.Context(), http.StatusOK, views.Goal(storedGoal))
+		c.Render(http.StatusOK, res)
+	})
+
+	r.GET("/goal/:id", func(c *gin.Context) {
+		goalID := c.Param("id")
+		goalJSON, ok := db[goalID]
+		if !ok {
+			c.JSON(http.StatusNotFound, gin.H{"error": "goal not found"})
+			return
+		}
+
+		var goal services.Goal
+		if err := json.Unmarshal([]byte(goalJSON), &goal); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		res := renderer.New(c.Request.Context(), http.StatusOK, views.Goal(goal))
+		c.Render(http.StatusOK, res)
+	})
+
+	r.GET("/goals", func(c *gin.Context) {
+		log.Println("Getting all goals")
+
+		var goals []services.Goal
+		for _, goalJSON := range db {
+			var goal services.Goal
+			if err := json.Unmarshal([]byte(goalJSON), &goal); err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+				return
+			}
+			goals = append(goals, goal)
+		}
+
+		//log all goals
+		for _, goal := range goals {
+			log.Println(goal)
+		}
+
+		res := renderer.New(c.Request.Context(), http.StatusOK, views.Goal(goals[0]))
 		c.Render(http.StatusOK, res)
 	})
 
 	// Ping test
 	r.GET("/ping", func(c *gin.Context) {
-		c.String(http.StatusOK, "pong")
+		c.String(http.StatusOK, "pong foo")
 	})
 
 	// Get user value
@@ -48,8 +117,8 @@ func setupRouter() *gin.Engine {
 	//	  "manu": "123",
 	//}))
 	authorized := r.Group("/", gin.BasicAuth(gin.Accounts{
-		"foo":  "bar", // user:foo password:bar
-		"nico": "123", // user:manu password:123
+		"foo":  "bar",
+		"nico": "123",
 	}))
 
 	/* example curl for /admin with basicauth header

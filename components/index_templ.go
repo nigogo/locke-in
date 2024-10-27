@@ -29,7 +29,7 @@ func Index() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<html lang=\"en\"><head><title>LockeIn</title><meta charset=\"UTF-8\"><script src=\"/assets/htmx.min.js\"></script></head><body hx-boost=\"true\"><h1>LockeIn</h1><div id=\"app\"><form action=\"/goal\" method=\"post\" hx-post=\"/goal\" hx-target=\"#app\" hx-push-url=\"true\"><label for=\"goal\">Achieve this:</label> <input type=\"text\" id=\"goal\" name=\"goal\"> <label for=\"deadline\">By then:</label> <input type=\"date\" id=\"deadline\" name=\"deadline\"> <input type=\"submit\" value=\"Submit\"></form></div></body></html>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<html lang=\"en\"><head><title>LockeIn</title><meta charset=\"UTF-8\"><script src=\"/assets/htmx.min.js\"></script></head><body hx-boost=\"true\"><h1>LockeIn</h1><div id=\"app\"><form action=\"/goal\" method=\"post\" hx-post=\"/goal\" hx-target=\"#app\" hx-push-url=\"true\"><label for=\"name\">Achieve this:</label> <input type=\"text\" id=\"name\" name=\"name\"> <label for=\"deadline\">By then:</label> <input type=\"datetime-local\" id=\"deadline\" name=\"deadline\" value=\"2024-10-27T22:45\"> <input type=\"submit\" value=\"Submit\"></form></div></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

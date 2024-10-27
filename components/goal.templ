@@ -1,7 +1,22 @@
 package views
 
-templ Goal() {
-    <div>
-       <h2>Achieve your goal!</h2>
-    </div>
+import (
+    "time"
+    "github.com/nigogo/locke-in/services"
+)
+
+templ Goal(goal services.Goal) {
+	<div>
+		<h2>Achieve your goal!</h2>
+		<p>Goal: <strong>{ goal.Name }</strong></p>
+		<p>Deadline: <strong>{time.Time.String(goal.Deadline)}</strong></p>
+		<p>
+			Completed:
+			if goal.Completed {
+                <strong>Yes</strong>
+            } else {
+                <strong>No</strong>
+            }
+		</p>
+	</div>
 }

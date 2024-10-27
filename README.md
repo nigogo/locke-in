@@ -19,3 +19,7 @@ Generate templ templates (Make sure to add the go bin directory to your PATH)
 ```bash
 templ generate
 ```
+
+### Debugging
+
+Run `air` and [attach to the process using GoLand](https://www.jetbrains.com/help/go/attach-to-running-go-processes-with-debugger.html)(Ctrl+Alt+5 on Linux)
