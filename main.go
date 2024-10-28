@@ -41,7 +41,7 @@ func setupRouter() *gin.Engine {
 
 		db[goalID] = string(goalJSON)
 
-		c.Redirect(http.StatusFound, "/goal/"+goalID)
+		c.Redirect(http.StatusSeeOther, "/goal/"+goalID)
 	})
 
 	r.GET("/goal/:id", func(c *gin.Context) {
