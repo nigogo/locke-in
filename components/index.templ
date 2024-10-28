@@ -1,6 +1,7 @@
 package views
 
 templ Index() {
+	<!doctype html>
 	<html lang="en">
 		<head>
 			<title>LockeIn</title>
@@ -8,6 +9,7 @@ templ Index() {
 			<script src="/assets/htmx.min.js"></script>
 			<script src="/assets/_hyperscript.min.js"></script>
 			<link rel="stylesheet" href="/assets/style.css"/>
+			<link rel="icon" href="/assets/favicon.ico"/>
 		</head>
 		<body hx-boost="true">
 			<h1>LockeIn</h1>
@@ -16,7 +18,7 @@ templ Index() {
 					<label for="name">Achieve this:</label>
 					<input type="text" id="name" name="name"/>
 					<label for="deadline">By then:</label>
-					<input type="datetime-local" id="deadline" name="endDate" value="2024-10-27T22:45" />
+					<input type="datetime-local" id="deadline" name="endDate" value="2024-10-27T22:45"/>
 					<input type="submit" value="Submit"/>
 				</form>
 			</div>
