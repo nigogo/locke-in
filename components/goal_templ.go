@@ -52,7 +52,7 @@ func Goal(goal services.Goal) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
-		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(time.Time.String(goal.Deadline))
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(time.Time.String(goal.EndDate))
 		if templ_7745c5c3_Err != nil {
 			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/goal.templ`, Line: 12, Col: 55}
 		}
@@ -75,7 +75,7 @@ func Goal(goal services.Goal) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p><p><div class=\"progress\"><div id=\"progress-bar\" class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"0\" style=\"width:0\" _=\"\n\t\t\t\t\t    on load wait 1s then repeat until my *width == &#39;100%&#39;\n\t\t\t\t\t        set progress to my @aria-valuenow\n                            increment progress\n                            set my @aria-valuenow to progress\n                            set my *width to `${progress}%`\n                    \"></div></div></p></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

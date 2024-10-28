@@ -18,7 +18,6 @@ func setupRouter() *gin.Engine {
 	r := gin.Default()
 
 	r.GET("/", func(c *gin.Context) {
-		// return templ template index.template
 		res := renderer.New(c.Request.Context(), http.StatusOK, views.Index())
 		c.Render(http.StatusOK, res)
 	})
@@ -34,13 +33,6 @@ func setupRouter() *gin.Engine {
 
 		goalID := uuid.New().String()
 
-		var storedGoal = services.Goal{
-			ID:        goalID,
-			Name:      goal.Name,
-			Deadline:  goal.Deadline,
-			Completed: false,
-		}
-
 		goalJSON, err := json.Marshal(goal)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -49,8 +41,7 @@ func setupRouter() *gin.Engine {
 
 		db[goalID] = string(goalJSON)
 
-		res := renderer.New(c.Request.Context(), http.StatusOK, views.Goal(storedGoal))
-		c.Render(http.StatusOK, res)
+		c.Redirect(http.StatusFound, "/goal/"+goalID)
 	})
 
 	r.GET("/goal/:id", func(c *gin.Context) {

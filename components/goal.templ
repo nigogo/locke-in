@@ -1,22 +1,40 @@
 package views
 
 import (
-    "time"
-    "github.com/nigogo/locke-in/services"
+	"github.com/nigogo/locke-in/services"
+	"time"
 )
 
 templ Goal(goal services.Goal) {
 	<div>
 		<h2>Achieve your goal!</h2>
 		<p>Goal: <strong>{ goal.Name }</strong></p>
-		<p>Deadline: <strong>{time.Time.String(goal.Deadline)}</strong></p>
+		<p>Deadline: <strong>{ time.Time.String(goal.EndDate) }</strong></p>
 		<p>
 			Completed:
 			if goal.Completed {
-                <strong>Yes</strong>
-            } else {
-                <strong>No</strong>
-            }
+				<strong>Yes</strong>
+			} else {
+				<strong>No</strong>
+			}
+		</p>
+		<p>
+			<div class="progress">
+				<div
+					id="progress-bar"
+					class="progress-bar"
+					role="progressbar"
+					aria-valuenow="0"
+					style="width:0"
+					_="
+					    on load wait 1s then repeat until my *width == '100%'
+					        set progress to my @aria-valuenow
+                            increment progress
+                            set my @aria-valuenow to progress
+                            set my *width to `${progress}%`
+                    "
+				></div>
+			</div>
 		</p>
 	</div>
 }
