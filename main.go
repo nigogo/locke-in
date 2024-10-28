@@ -18,7 +18,7 @@ func setupRouter() *gin.Engine {
 	r := gin.Default()
 
 	r.GET("/", func(c *gin.Context) {
-		res := renderer.New(c.Request.Context(), http.StatusOK, views.Index())
+		res := renderer.New(c.Request.Context(), http.StatusOK, views.GoalForm())
 		c.Render(http.StatusOK, res)
 	})
 
