@@ -1,16 +1,18 @@
 package views
 
 import (
+    "fmt"
 	"github.com/nigogo/locke-in/services"
-	"time"
 )
 
 templ Goal(goal services.Goal) {
 	@Index() {
 		<div>
 			<h2>Achieve your goal!</h2>
+			<p>ID: <strong>{ goal.ID }</strong></p>
 			<p>Goal: <strong>{ goal.Name }</strong></p>
-			<p>Deadline: <strong>{ time.Time.String(goal.EndDate) }</strong></p>
+			<p>Start Date: <strong>{ goal.StartDate.String() }</strong></p>
+			<p>End Date: <strong>{ goal.EndDate.String() }</strong></p>
 			<p>
 				Completed:
 				if goal.Completed {
@@ -27,13 +29,22 @@ templ Goal(goal services.Goal) {
 						role="progressbar"
 						aria-valuenow="0"
 						style="width:0"
-						_="
-    					    on load wait 1s then repeat until my *width == '100%'
-    					        set progress to my @aria-valuenow
-                                increment progress
-                                set my @aria-valuenow to progress
-                                set my *width to `${progress}%`
-                        "
+						_={
+						    fmt.Sprintf(`
+						    on load
+						        set nowDate to Date.now()
+                                set startDate to "%d"
+                                set endDate to "%d"
+                                set total to endDate - startDate
+                                set currentPercent to ((nowDate - startDate) / total) * 100
+						        log "now\t" + nowDate
+                                log "start\t" + startDate
+                                log "end\t" + endDate
+                                log "total\t" + total
+                                log "cur %%\t" + currentPercent
+                                set my *width to currentPercent %%
+						    `, goal.StartDate.Unix() * 1000, goal.EndDate.Unix() * 1000)
+						}
 					></div>
 				</div>
 			</p>

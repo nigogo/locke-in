@@ -9,8 +9,8 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
+	"fmt"
 	"github.com/nigogo/locke-in/services"
-	"time"
 )
 
 func Goal(goal services.Goal) templ.Component {
@@ -46,29 +46,55 @@ func Goal(goal services.Goal) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div><h2>Achieve your goal!</h2><p>Goal: <strong>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div><h2>Achieve your goal!</h2><p>ID: <strong>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var3 string
-			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(goal.Name)
+			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(goal.ID)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/goal.templ`, Line: 12, Col: 31}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/goal.templ`, Line: 12, Col: 27}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</strong></p><p>Deadline: <strong>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</strong></p><p>Goal: <strong>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var4 string
-			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(time.Time.String(goal.EndDate))
+			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(goal.Name)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/goal.templ`, Line: 13, Col: 56}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/goal.templ`, Line: 13, Col: 31}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</strong></p><p>Start Date: <strong>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var5 string
+			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(goal.StartDate.String())
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/goal.templ`, Line: 14, Col: 51}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</strong></p><p>End Date: <strong>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var6 string
+			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(goal.EndDate.String())
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/goal.templ`, Line: 15, Col: 47}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -87,7 +113,34 @@ func Goal(goal services.Goal) templ.Component {
 					return templ_7745c5c3_Err
 				}
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p><p><div class=\"progress\"><div id=\"progress-bar\" class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"0\" style=\"width:0\" _=\"\n    \t\t\t\t\t    on load wait 1s then repeat until my *width == &#39;100%&#39;\n    \t\t\t\t\t        set progress to my @aria-valuenow\n                                increment progress\n                                set my @aria-valuenow to progress\n                                set my *width to `${progress}%`\n                        \"></div></div></p></div>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p><p><div class=\"progress\"><div id=\"progress-bar\" class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"0\" style=\"width:0\" _=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var7 string
+			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(
+				fmt.Sprintf(`
+						    on load
+						        set nowDate to Date.now()
+                                set startDate to "%d"
+                                set endDate to "%d"
+                                set total to endDate - startDate
+                                set currentPercent to ((nowDate - startDate) / total) * 100
+						        log "now\t" + nowDate
+                                log "start\t" + startDate
+                                log "end\t" + endDate
+                                log "total\t" + total
+                                log "cur %%\t" + currentPercent
+                                set my *width to currentPercent %%
+						    `, goal.StartDate.Unix()*1000, goal.EndDate.Unix()*1000))
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/goal.templ`, Line: 46, Col: 70}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"></div></div></p></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

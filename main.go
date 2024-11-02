@@ -2,12 +2,14 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/google/uuid"
-	"github.com/nigogo/locke-in/components"
-	"github.com/nigogo/locke-in/renderer"
-	"github.com/nigogo/locke-in/services"
 	"log"
 	"net/http"
+	"time"
+
+	"github.com/google/uuid"
+	views "github.com/nigogo/locke-in/components"
+	"github.com/nigogo/locke-in/renderer"
+	"github.com/nigogo/locke-in/services"
 
 	"github.com/gin-gonic/gin"
 )
@@ -22,27 +24,49 @@ func setupRouter() *gin.Engine {
 		c.Render(http.StatusOK, res)
 	})
 
-	r.POST("/goal", func(c *gin.Context) {
-		println("Creating a new goal")
+	r.POST(
+		"/goal",
+		func(c *gin.Context) {
+			println("Creating a new goal")
 
-		var goal services.Goal
-		if err := c.ShouldBind(&goal); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
-		}
+			var goal services.Goal
+			if err := c.ShouldBind(&goal); err != nil {
+				c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+				return
+			}
 
-		goalID := uuid.New().String()
+			location, err := time.LoadLocation("Europe/Vienna")
+			if err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+				return
+			}
 
-		goalJSON, err := json.Marshal(goal)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
+			goalID := uuid.New().String()
+			startDate, err := time.Parse("2006-01-02T15:04", time.Now().In(location).Format("2006-01-02T15:04"))
+			if err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+				return
+			}
 
-		db[goalID] = string(goalJSON)
+			goal = services.Goal{
+				ID:        goalID,
+				Name:      goal.Name,
+				StartDate: startDate,
+				EndDate:   goal.EndDate,
+				Completed: false,
+			}
 
-		c.Redirect(http.StatusSeeOther, "/goal/"+goalID)
-	})
+			goalJson, err := json.Marshal(goal)
+			if err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+				return
+			}
+
+			db[goalID] = string(goalJson)
+
+			c.Redirect(http.StatusSeeOther, "/goal/"+goalID)
+		},
+	)
 
 	r.GET("/goal/:id", func(c *gin.Context) {
 		goalID := c.Param("id")
@@ -57,6 +81,8 @@ func setupRouter() *gin.Engine {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
+
+		log.Println(goal)
 
 		res := renderer.New(c.Request.Context(), http.StatusOK, views.Goal(goal))
 		c.Render(http.StatusOK, res)
@@ -75,7 +101,7 @@ func setupRouter() *gin.Engine {
 			goals = append(goals, goal)
 		}
 
-		//log all goals
+		// log all goals
 		for _, goal := range goals {
 			log.Println(goal)
 		}
