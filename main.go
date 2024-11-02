@@ -28,25 +28,17 @@ func setupRouter() *gin.Engine {
 		"/goal",
 		func(c *gin.Context) {
 			println("Creating a new goal")
+			println("NOW: " + time.Now().String())
 
 			var goal services.Goal
 			if err := c.ShouldBind(&goal); err != nil {
 				c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 				return
 			}
-
-			location, err := time.LoadLocation("Europe/Vienna")
-			if err != nil {
-				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-				return
-			}
+			println("local time: " + goal.EndDate.String())
 
 			goalID := uuid.New().String()
-			startDate, err := time.Parse("2006-01-02T15:04", time.Now().In(location).Format("2006-01-02T15:04"))
-			if err != nil {
-				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-				return
-			}
+			startDate := time.Now()
 
 			goal = services.Goal{
 				ID:        goalID,

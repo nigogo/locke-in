@@ -41,7 +41,7 @@ func GoalForm() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form action=\"/goal\" method=\"post\" hx-post=\"/goal\" hx-push-url=\"true\" hx-target=\"body\"><label for=\"name\">Achieve this:</label> <input type=\"text\" id=\"name\" name=\"name\"> <label for=\"deadline\">By then:</label> <input type=\"datetime-local\" id=\"deadline\" name=\"endDate\" value=\"2024-11-02T16:45\"> <input type=\"submit\" value=\"Submit\"></form>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form action=\"/goal\" method=\"post\" hx-post=\"/goal\" hx-push-url=\"true\" hx-target=\"body\"><label for=\"name\">Achieve this:</label> <input type=\"text\" id=\"name\" name=\"name\"> <label for=\"deadline\">By then:</label> <input type=\"datetime-local\" id=\"deadline\" name=\"endDate\" value=\"2024-11-02T18:25\"> <input type=\"submit\" value=\"Submit\"></form>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
