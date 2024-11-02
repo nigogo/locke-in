@@ -2,6 +2,7 @@ package views
 
 import (
 	"github.com/nigogo/locke-in/services"
+  "fmt"
 )
 
 templ Goal(goal services.Goal) {
@@ -30,19 +31,29 @@ templ Goal(goal services.Goal) {
 						style="animation:bar 5s linear;"
 					></div>
 				</div>
-        
 				<div class="progress">
 					<div
 						id="progress-bar"
 						class="progress-bar"
 						role="progressbar"
 						aria-valuenow="0"
-            _="
-              on load
-                set *width to '40%'
-                then wait 20ms
-                then transition *width to '100%' using 'all 10s linear'  
-            "
+            _={
+              fmt.Sprintf(`
+                  on load
+                    set nowDate to Date.now()
+                    set startDate to "%d"
+                    set endDate to "%d"
+                    set total to endDate - startDate
+                    set currentPercent to ((nowDate - startDate) / total) * 100
+                    set *width to currentPercent %%
+                    then wait 20ms
+                    set remainingTime to endDate - Date.now()
+                    then transition *width to "100%%" using "all " + remainingTime + "ms linear"
+              `,
+                goal.StartDate.Unix() * 1000,
+                goal.EndDate.Unix() * 1000,
+              )
+            }
 					></div>
 				</div>
 			</p>
