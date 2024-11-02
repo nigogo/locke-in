@@ -18,7 +18,7 @@ templ Goal(goal services.Goal) {
 				if goal.Completed {
 					<strong>Yes</strong>
 				} else {
-					<strong>No</strong>
+					<strong>No</strong> 
 				}
 			</p>
 			<p>
@@ -30,19 +30,19 @@ templ Goal(goal services.Goal) {
 						aria-valuenow="0"
 						style="width:0"
 						_={
-						    fmt.Sprintf(`
+              fmt.Sprintf(`
 						    on load
-						        set nowDate to Date.now()
-                                set startDate to "%d"
-                                set endDate to "%d"
-                                set total to endDate - startDate
-                                set currentPercent to ((nowDate - startDate) / total) * 100
-						        log "now\t" + nowDate
-                                log "start\t" + startDate
-                                log "end\t" + endDate
-                                log "total\t" + total
-                                log "cur %%\t" + currentPercent
-                                set my *width to currentPercent %%
+                  set nowDate to Date.now()
+                  set startDate to "%d"
+                  set endDate to "%d"
+                  set total to endDate - startDate
+                  set currentPercent to ((nowDate - startDate) / total) * 100
+                  log "now\t" + nowDate
+                  log "start\t" + startDate
+                  log "end\t" + endDate
+                  log "total\t" + total
+                  log "cur %%\t" + currentPercent
+                  set my *width to currentPercent %%
 						    `, goal.StartDate.Unix() * 1000, goal.EndDate.Unix() * 1000)
 						}
 					></div>

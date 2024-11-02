@@ -121,17 +121,17 @@ func Goal(goal services.Goal) templ.Component {
 			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(
 				fmt.Sprintf(`
 						    on load
-						        set nowDate to Date.now()
-                                set startDate to "%d"
-                                set endDate to "%d"
-                                set total to endDate - startDate
-                                set currentPercent to ((nowDate - startDate) / total) * 100
-						        log "now\t" + nowDate
-                                log "start\t" + startDate
-                                log "end\t" + endDate
-                                log "total\t" + total
-                                log "cur %%\t" + currentPercent
-                                set my *width to currentPercent %%
+                  set nowDate to Date.now()
+                  set startDate to "%d"
+                  set endDate to "%d"
+                  set total to endDate - startDate
+                  set currentPercent to ((nowDate - startDate) / total) * 100
+                  log "now\t" + nowDate
+                  log "start\t" + startDate
+                  log "end\t" + endDate
+                  log "total\t" + total
+                  log "cur %%\t" + currentPercent
+                  set my *width to currentPercent %%
 						    `, goal.StartDate.Unix()*1000, goal.EndDate.Unix()*1000))
 			if templ_7745c5c3_Err != nil {
 				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/goal.templ`, Line: 46, Col: 70}
