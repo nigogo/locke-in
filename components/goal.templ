@@ -66,13 +66,13 @@ templ Goal(goal services.Goal, achievedGoals []services.Goal) {
           </tr>
         </thead>
         <tbody>
+        for _, goal := range achievedGoals {
           <tr>
-          for _, goal := range achievedGoals {
             <td>{ goal.Name }</td>
             // TODO: Needs an AchievedAt here
             <td>{ goal.EndDate.String() }</td>
-          }
           </tr>
+        }
         </tbody>
       </table>
 		</div>
