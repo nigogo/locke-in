@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -16,17 +17,68 @@ import (
 
 var db = make(map[string]string)
 
-func GetAllGoals() []services.Goal {
+// GetGoals parses all goals from db and returns a slice of goals and an error if parsing fails.
+func GetGoals() ([]services.Goal, error) {
 	var goals []services.Goal
 	for _, goalJSON := range db {
 		var goal services.Goal
 		if err := json.Unmarshal([]byte(goalJSON), &goal); err != nil {
-			return nil
+			return nil, fmt.Errorf("failed to unmarshal goal: %w", err)
 		}
 		goals = append(goals, goal)
 	}
+	return goals, nil
+}
 
-	return goals
+// GetActiveGoal returns a pointer to the first active goal, or nil if none is found.
+func GetActiveGoal() (*services.Goal, error) {
+	goals, err := GetGoals()
+	if err != nil {
+		return nil, err
+	}
+
+	for i := range goals {
+		if !goals[i].Completed {
+			return &goals[i], nil
+		}
+	}
+	return nil, nil // No active goal found
+}
+
+// GetCompletedGoals filters and returns all completed goals.
+func GetCompletedGoals() ([]services.Goal, error) {
+	goals, err := GetGoals()
+	if err != nil {
+		return nil, err
+	}
+
+	log.Printf("goals: %v", goals)
+
+	completedGoals := make([]services.Goal, 0, len(goals))
+	for _, goal := range goals {
+		if goal.Completed {
+			completedGoals = append(completedGoals, goal)
+		}
+	}
+
+	log.Printf("completed goals: %v", completedGoals)
+
+	// log all GetCompletedGoals
+	for i, goal := range completedGoals {
+		log.Printf("completed goal %d: %v", i, goal)
+	}
+
+	return completedGoals, nil
+}
+
+func storeGoal(goal services.Goal) error {
+	goalJson, err := json.Marshal(goal)
+	if err != nil {
+		return fmt.Errorf("failed to marshal goal: %w", err)
+	}
+
+	db[goal.ID] = string(goalJson)
+	return nil
 }
 
 func setupRouter() *gin.Engine {
@@ -87,9 +139,12 @@ func setupRouter() *gin.Engine {
 			return
 		}
 
-		allGoals := GetAllGoals()
+		completedGoals, err := GetCompletedGoals()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"could not get goals": err.Error()})
+		}
 
-		res := renderer.New(c.Request.Context(), http.StatusOK, views.Goal(goal, allGoals))
+		res := renderer.New(c.Request.Context(), http.StatusOK, views.Goal(goal, completedGoals))
 		c.Render(http.StatusOK, res)
 	})
 
@@ -108,25 +163,35 @@ func setupRouter() *gin.Engine {
 		}
 
 		goal.Completed = true
-		allGoals := GetAllGoals()
+		err := storeGoal(goal)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "could not store goal"})
+			return
+		}
 
-		res := renderer.New(c.Request.Context(), http.StatusOK, views.Goal(goal, allGoals))
+		completedGoals, err := GetCompletedGoals()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"could not get goals": err.Error()})
+		}
+
+		res := renderer.New(c.Request.Context(), http.StatusOK, views.Goal(goal, completedGoals))
 		c.Render(http.StatusOK, res)
 	})
 
 	r.GET("/goals", func(c *gin.Context) {
 		log.Println("Getting all goals")
 
-		goals := GetAllGoals()
-
-		// log all goals
-		for _, goal := range goals {
-			log.Println(goal)
+		activeGoal, err := GetActiveGoal()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"could not get goals": err.Error()})
 		}
 
-		allGoals := GetAllGoals()
+		allGoals, err := GetGoals()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"could not get goals": err.Error()})
+		}
 
-		res := renderer.New(c.Request.Context(), http.StatusOK, views.Goal(goals[0], allGoals))
+		res := renderer.New(c.Request.Context(), http.StatusOK, views.Goal(*activeGoal, allGoals))
 		c.Render(http.StatusOK, res)
 	})
 
