@@ -16,6 +16,19 @@ import (
 
 var db = make(map[string]string)
 
+func GetAllGoals() []services.Goal {
+	var goals []services.Goal
+	for _, goalJSON := range db {
+		var goal services.Goal
+		if err := json.Unmarshal([]byte(goalJSON), &goal); err != nil {
+			return nil
+		}
+		goals = append(goals, goal)
+	}
+
+	return goals
+}
+
 func setupRouter() *gin.Engine {
 	r := gin.Default()
 
@@ -74,7 +87,9 @@ func setupRouter() *gin.Engine {
 			return
 		}
 
-		res := renderer.New(c.Request.Context(), http.StatusOK, views.Goal(goal))
+		allGoals := GetAllGoals()
+
+		res := renderer.New(c.Request.Context(), http.StatusOK, views.Goal(goal, allGoals))
 		c.Render(http.StatusOK, res)
 	})
 
@@ -93,30 +108,25 @@ func setupRouter() *gin.Engine {
 		}
 
 		goal.Completed = true
+		allGoals := GetAllGoals()
 
-		res := renderer.New(c.Request.Context(), http.StatusOK, views.Goal(goal))
+		res := renderer.New(c.Request.Context(), http.StatusOK, views.Goal(goal, allGoals))
 		c.Render(http.StatusOK, res)
 	})
 
 	r.GET("/goals", func(c *gin.Context) {
 		log.Println("Getting all goals")
 
-		var goals []services.Goal
-		for _, goalJSON := range db {
-			var goal services.Goal
-			if err := json.Unmarshal([]byte(goalJSON), &goal); err != nil {
-				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-				return
-			}
-			goals = append(goals, goal)
-		}
+		goals := GetAllGoals()
 
 		// log all goals
 		for _, goal := range goals {
 			log.Println(goal)
 		}
 
-		res := renderer.New(c.Request.Context(), http.StatusOK, views.Goal(goals[0]))
+		allGoals := GetAllGoals()
+
+		res := renderer.New(c.Request.Context(), http.StatusOK, views.Goal(goals[0], allGoals))
 		c.Render(http.StatusOK, res)
 	})
 

@@ -5,7 +5,7 @@ import (
   "fmt"
 )
 
-templ Goal(goal services.Goal) {
+templ Goal(goal services.Goal, achievedGoals []services.Goal) {
 	@Index() {
 		<div>
 			<h2>Achieve your goal!</h2>
@@ -58,6 +58,23 @@ templ Goal(goal services.Goal) {
           <button hx-patch={ "/goal/" + goal.ID } hx-push-url="true" hx-target="body">Done!</button>
         }
       </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Goal</th>
+            <th>Achieved</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+          for _, goal := range achievedGoals {
+            <td>{ goal.Name }</td>
+            // TODO: Needs an AchievedAt here
+            <td>{ goal.EndDate.String() }</td>
+          }
+          </tr>
+        </tbody>
+      </table>
 		</div>
 	}
 }
