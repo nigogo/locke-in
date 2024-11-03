@@ -28,18 +28,12 @@ templ Goal(goal services.Goal) {
 						class="progress-bar"
 						role="progressbar"
 						aria-valuenow="0"
-						style="animation:bar 5s linear;"
-					></div>
-				</div>
-				<div class="progress">
-					<div
-						id="progress-bar"
-						class="progress-bar"
-						role="progressbar"
-						aria-valuenow="0"
             _={
               fmt.Sprintf(`
-                  on load
+                on load
+                  if %t
+                    set *width to "100%%"
+                  else
                     set nowDate to Date.now()
                     set startDate to "%d"
                     set endDate to "%d"
@@ -50,6 +44,7 @@ templ Goal(goal services.Goal) {
                     set remainingTime to endDate - Date.now()
                     then transition *width to "100%%" using "all " + remainingTime + "ms linear"
               `,
+                goal.Completed,
                 goal.StartDate.Unix() * 1000,
                 goal.EndDate.Unix() * 1000,
               )
@@ -57,6 +52,12 @@ templ Goal(goal services.Goal) {
 					></div>
 				</div>
 			</p>
+      <p>
+        // TODO: make this a progressive enhancement
+        if !goal.Completed {
+          <button hx-patch={ "/goal/" + goal.ID } hx-push-url="true" hx-target="body">Done!</button>
+        }
+      </p>
 		</div>
 	}
 }

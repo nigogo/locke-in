@@ -113,14 +113,17 @@ func Goal(goal services.Goal) templ.Component {
 					return templ_7745c5c3_Err
 				}
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p><p><div class=\"progress\"><div id=\"progress-bar\" class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"0\" style=\"animation:bar 5s linear;\"></div></div><div class=\"progress\"><div id=\"progress-bar\" class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"0\" _=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p><p><div class=\"progress\"><div id=\"progress-bar\" class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"0\" _=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var7 string
 			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(
 				fmt.Sprintf(`
-                  on load
+                on load
+                  if %t
+                    set *width to "100%%"
+                  else
                     set nowDate to Date.now()
                     set startDate to "%d"
                     set endDate to "%d"
@@ -131,17 +134,41 @@ func Goal(goal services.Goal) templ.Component {
                     set remainingTime to endDate - Date.now()
                     then transition *width to "100%%" using "all " + remainingTime + "ms linear"
               `,
+					goal.Completed,
 					goal.StartDate.Unix()*1000,
 					goal.EndDate.Unix()*1000,
 				))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/goal.templ`, Line: 55, Col: 15}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/goal.templ`, Line: 50, Col: 15}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"></div></div></p></div>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"></div></div></p><p>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			if !goal.Completed {
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<button hx-patch=\"")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				var templ_7745c5c3_Var8 string
+				templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs("/goal/" + goal.ID)
+				if templ_7745c5c3_Err != nil {
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/goal.templ`, Line: 58, Col: 47}
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-push-url=\"true\" hx-target=\"body\">Done!</button>")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

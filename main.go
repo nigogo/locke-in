@@ -74,7 +74,25 @@ func setupRouter() *gin.Engine {
 			return
 		}
 
-		log.Println(goal)
+		res := renderer.New(c.Request.Context(), http.StatusOK, views.Goal(goal))
+		c.Render(http.StatusOK, res)
+	})
+
+	r.PATCH("/goal/:id", func(c *gin.Context) {
+		goalID := c.Param("id")
+		goalJSON, ok := db[goalID]
+		if !ok {
+			c.JSON(http.StatusNotFound, gin.H{"error": "goal not found"})
+			return
+		}
+
+		var goal services.Goal
+		if err := json.Unmarshal([]byte(goalJSON), &goal); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		goal.Completed = true
 
 		res := renderer.New(c.Request.Context(), http.StatusOK, views.Goal(goal))
 		c.Render(http.StatusOK, res)
