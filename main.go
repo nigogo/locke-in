@@ -85,7 +85,12 @@ func setupRouter() *gin.Engine {
 	r := gin.Default()
 
 	r.GET("/", func(c *gin.Context) {
-		res := renderer.New(c.Request.Context(), http.StatusOK, views.GoalForm())
+		completedGoals, err := GetCompletedGoals()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"could not get goals": err.Error()})
+		}
+
+		res := renderer.New(c.Request.Context(), http.StatusOK, views.GoalForm(completedGoals))
 		c.Render(http.StatusOK, res)
 	})
 

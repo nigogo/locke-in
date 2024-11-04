@@ -8,7 +8,9 @@ package views
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-func GoalForm() templ.Component {
+import "github.com/nigogo/locke-in/services"
+
+func GoalForm(achievedGoals []services.Goal) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -44,6 +46,12 @@ func GoalForm() templ.Component {
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form action=\"/goal\" method=\"post\" hx-post=\"/goal\" hx-push-url=\"true\" hx-target=\"body\"><label for=\"name\">Achieve this:</label> <input type=\"text\" id=\"name\" name=\"name\"> <label for=\"deadline\">By then:</label> <input type=\"datetime-local\" id=\"deadline\" name=\"endDate\" value=\"2024-11-03T20:25\"> <input type=\"submit\" value=\"Submit\"></form>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
+			}
+			if len(achievedGoals) > 0 {
+				templ_7745c5c3_Err = GoalTable(achievedGoals).Render(ctx, templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
 			}
 			return templ_7745c5c3_Err
 		})

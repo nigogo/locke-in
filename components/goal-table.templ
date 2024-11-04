@@ -1,0 +1,23 @@
+package views
+
+import "github.com/nigogo/locke-in/services"
+
+templ GoalTable(goals []services.Goal) {
+  <table>
+    <thead>
+      <tr>
+        <th>Goal</th>
+        <th>Achieved</th>
+      </tr>
+    </thead>
+    <tbody>
+    for _, goal := range goals {
+      <tr>
+        <td>{ goal.Name }</td>
+        // TODO: Needs an AchievedAt here
+        <td>{ goal.EndDate.String() }</td>
+      </tr>
+    }
+  </tbody>
+    </table>
+}

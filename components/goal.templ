@@ -54,27 +54,15 @@ templ Goal(goal services.Goal, achievedGoals []services.Goal) {
 			</p>
       <p>
         // TODO: make this a progressive enhancement
-        if !goal.Completed {
+        if goal.Completed {
+          <button hx-get="/" hx-target="body" hx-push-url="true">Set New Goal</button>
+        } else {
           <button hx-patch={ "/goal/" + goal.ID } hx-push-url="true" hx-target="body">Done!</button>
         }
       </p>
-      <table>
-        <thead>
-          <tr>
-            <th>Goal</th>
-            <th>Achieved</th>
-          </tr>
-        </thead>
-        <tbody>
-        for _, goal := range achievedGoals {
-          <tr>
-            <td>{ goal.Name }</td>
-            // TODO: Needs an AchievedAt here
-            <td>{ goal.EndDate.String() }</td>
-          </tr>
-        }
-        </tbody>
-      </table>
+      if len(achievedGoals) > 0 {
+        @GoalTable(achievedGoals)
+      }
 		</div>
 	}
 }
