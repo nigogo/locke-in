@@ -1,9 +1,9 @@
 :root {
-  --button-bg-color: hsl(204, 100%, 50%);
-  --button-hover-bg-color: hsl(204, 100%, 60%);
+  --button-bg-color: #0070c0;
+  --button-hover-bg-color: #0083E0;
   --button-active-bg-color: hsl(204, 100%, 40%);
   --button-focus-border-color: hsl(204, 100%, 50%);
-  --button-focus-outline-color: hsl(45, 100%, 50%);
+  --button-focus-outline-color: #FF495C;
 }
 
 button, input[type="submit"] {

@@ -1,0 +1,102 @@
+<htm lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Button</title>
+    <style>
+
+:root {
+  --button-bg-color: hsl(204, 100%, 50%);
+  --button-hover-bg-color: hsl(204, 100%, 60%);
+  --button-active-bg-color: hsl(204, 100%, 40%);
+  --button-focus-border-color: hsl(204, 100%, 50%);
+  --button-focus-outline-color: hsl(45, 100%, 50%);
+  --background-gradient: radial-gradient(circle at 50% 50%, hsla(0, 0%, 100%, 0.8) 10%, hsla(204, 100%, 96%, 0.4) 30%, hsla(204, 100%, 95%, 0.2) 60%, hsla(204, 100%, 92%, 0.1) 100%);
+}
+
+body {
+  height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color:#af99ff;
+  background-image:
+  radial-gradient(at 34% 7%, hsla(271,83%,79%,1) 0px, transparent 50%),
+  radial-gradient(at 54% 92%, hsla(175,85%,62%,1) 0px, transparent 50%),
+  radial-gradient(at 41% 35%, hsla(56,99%,77%,1) 0px, transparent 50%);
+}
+button {
+        background: rgba(255, 255, 255, 0.2); /* Translucent white background */
+        border-radius: 12px; /* Rounded corners */
+        padding: 12px 24px; /* Some comfortable padding */
+        border: 1px solid rgba(255, 255, 255, 0.3); /* Light border to emphasize the glass effect */
+        backdrop-filter: blur(10px); /* Glass blur effect */
+        -webkit-backdrop-filter: blur(10px); /* Safari support for blur */
+        color: #fff; /* White text */
+        text-transform: uppercase; /* Make the text uppercase for emphasis */
+        font-weight: bold; /* Bold text */
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+        transition: all 0.3s ease-in-out; /* Smooth hover transition */
+        cursor: pointer; /* Change cursor to pointer on hover */
+    }
+
+    button:hover {
+        background: rgba(255, 255, 255, 0.3); /* Lighten the background on hover */
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Deepen the shadow on hover */
+    }
+
+    button:active {
+        transform: scale(0.98); /* Slight press-in effect when clicked */
+    }
+
+    .card {
+        background: rgba(255, 255, 255, 0.15); /* Translucent card background */
+        border-radius: 16px; /* Rounded corners for the card */
+        padding: 24px; /* Comfortable padding inside the card */
+        border: 1px solid rgba(255, 255, 255, 0.25); /* Light border for card emphasis */
+        backdrop-filter: blur(50px); /* Glass blur effect */
+        -webkit-backdrop-filter: blur(50px); /* Safari support for blur */
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+        max-width: 400px; /* Limit card width */
+        margin: 20px auto; /* Center the card horizontally */
+        color: #fff; /* White text for contrast */
+    }
+
+    .card input[type="text"],
+    .card input[type="email"],
+    .card input[type="password"] {
+        width: calc(100% - 24px); /* Full width input with padding space */
+        padding: 10px; /* Comfortable padding inside inputs */
+        margin: 10px 0; /* Space between inputs */
+        border-radius: 8px; /* Rounded corners for inputs */
+        border: 1px solid rgba(255, 255, 255, 0.3); /* Light border */
+        backdrop-filter: blur(5px); /* Subtle glass effect on inputs */
+        -webkit-backdrop-filter: blur(5px); /* Safari support for blur */
+        background: rgba(255, 255, 255, 0.1); /* Translucent background for inputs */
+        color: #fff; /* White text */
+        outline: none; /* Remove default outline */
+    }
+
+    .card input[type="text"]:focus,
+    .card input[type="email"]:focus,
+    .card input[type="password"]:focus {
+        border: 1px solid rgba(255, 255, 255, 0.5); /* Highlight border on focus */
+        box-shadow: 0 0 8px rgba(255, 255, 255, 0.3); /* Glow effect on focus */
+    }
+
+    .card button {
+        margin-top: 20px; /* Space between form elements and button */
+        width: 100%; /* Full-width button */
+    }
+    </style>
+  </head>
+  <body>
+    <button>Click me</button><div class="card">
+    <h2>Sign Up</h2>
+    <form>
+        <input type="text" placeholder="Name" required>
+        <input type="email" placeholder="Email" required>
+        <input type="password" placeholder="Password" required>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+  </body>
+</html>
