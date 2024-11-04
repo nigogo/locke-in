@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button with Focus States</title>
+    <style>
+        /* Basic button styling */
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            transition: outline 0.2s ease-in-out, background-color 0.2s ease-in-out;
+            background-color: #007bff; /* Initial button color */
+            color: #ffffff;
+        }
+
+        /* Focus states for different scenarios */
+        button:focus {
+            outline: 3px solid #ff5733; /* Orange outline when focused */
+            background-color: #ffcccb; /* Light red background when focused */
+        }
+
+        button:focus-visible {
+            outline: 3px solid #33a7ff; /* Blue outline when keyboard-focused */
+            background-color: #cce7ff; /* Light blue background when keyboard-focused */
+        }
+
+        button:focus:active {
+            outline: 3px solid #28a745; /* Green outline when focused and active */
+            background-color: #d4edda; /* Light green background when focused and active */
+        }
+
+        /* When mouse is used to click, we hide the outline */
+        button:focus:not(:focus-visible) {
+            outline: none;
+        }
+
+        /* Button hover state */
+        button:hover {
+            background-color: #0056b3; /* Darker blue when hovered */
+        }
+
+        /* Button active state */
+        button:active {
+            background-color: #004080; /* Even darker blue when active */
+        }
+    </style>
+</head>
+<body>
+    <button id="customButton">Click Me!</button>
+</body>
+</html>
