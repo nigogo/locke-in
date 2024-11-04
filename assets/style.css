@@ -2,7 +2,7 @@
 /* Standardized Theme Variables for Light and Dark Modes */
 :root {
   /* Light Theme */
-  --color-background: linear-gradient(to bottom right, #3867d6, #4a90e2); /* Primary color gradient background */
+  --color-background: linear-gradient(180deg, hsl(204, 100%, 55%), hsl(204, 100%, 65%));
   --color-surface: #ffffff;   /* White surface elements like buttons and inputs */
   --color-primary: #ffb74d;   /* Warm yellow for primary actions */
   --color-secondary: #f0a500; /* Bright secondary for highlights */
@@ -100,7 +100,7 @@ input[type="submit"]:hover {
 }
 
 /* Apply styles to buttons and input elements */
-button, input, textarea, select {
+input, textarea, select {
   font-size: 16px;
   border: 1px solid var(--color-border);
   box-sizing: border-box;
@@ -112,18 +112,6 @@ button, input, textarea, select {
   transition: background 0.2s ease, color 0.2s ease, border 0.2s ease;
   background: var(--color-surface);
   color: var(--color-text-primary);
-}
-
-button {
-  font-weight: bold;
-  background: var(--color-primary);
-  color: #ffffff;
-  border: none;
-}
-
-button:hover, input:hover, textarea:hover, select:hover {
-  background: var(--color-secondary);
-  color: #ffffff;
 }
 
 input:focus, textarea:focus, select:focus {

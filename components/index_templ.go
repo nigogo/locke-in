@@ -29,7 +29,7 @@ func Index() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\"><head><title>LockeIn</title><meta charset=\"UTF-8\"><script src=\"/assets/htmx.min.js\"></script><script src=\"/assets/_hyperscript.min.js\"></script><link rel=\"stylesheet\" href=\"/assets/style.css\"><link rel=\"icon\" href=\"/assets/favicon.ico\"></head><body hx-boost=\"true\"><h1>🎯 LockeIn</h1>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\"><head><title>LockeIn</title><meta charset=\"UTF-8\"><script src=\"/assets/htmx.min.js\"></script><script src=\"/assets/_hyperscript.min.js\"></script><link rel=\"stylesheet\" href=\"/assets/style.css\"><link rel=\"stylesheet\" href=\"/assets/button.css\"><link rel=\"icon\" href=\"/assets/favicon.ico\"></head><body hx-boost=\"true\"><h1>🎯 LockeIn</h1>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
