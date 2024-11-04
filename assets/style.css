@@ -1,88 +1,182 @@
+
+/* Original Style with Modified Colors for Light and Dark Modes */
 :root {
-  /* Light mode theme variables */
-  --bg-color: #ffffff;
-  --primary-color: #333333;
-  --secondary-color: #e0e0e0;
-  --accent-color: #5a5a5a;
-  --border-radius: 4px;
-  --padding: 8px 12px;
+  /* Light Theme */
+  --background-color-light: #dcdcdc; /* Light grey background */
+  --element-color-light: #b0b0b0;   /* Light-mid grey for buttons and inputs */
+  --font-color-light: #2c2c2c;
+  --border-color-light: #9a9a9a;
+  --progress-bg-light: #e0e0e0;
+  --progress-bar-light: #4a90e2;
 }
 
 @media (prefers-color-scheme: dark) {
-  /* Dark mode overrides */
   :root {
-    --bg-color: #121212;
-    --primary-color: #dcb;
-    --secondary-color: #753;
-    --accent-color: #ab7070;
+    /* Dark Theme */
+    --background-color-dark: #2e2e2e;  /* Dark grey background */
+    --element-color-dark: #505050;      /* Mid grey for buttons and inputs */
+    --font-color-dark: #f5f5f5;
+    --border-color-dark: #777777;
+    --progress-bg-dark: #444444;
+    --progress-bar-dark: #337ab7;
   }
 }
 
-/* Applying the theme */
+:root {
+  /* Default Colors (depends on theme) */
+  --background-color: var(--background-color-light);
+  --element-color: var(--element-color-light);
+  --font-color: var(--font-color-light);
+  --border-color: var(--border-color-light);
+  --progress-bg: var(--progress-bg-light);
+  --progress-bar: var(--progress-bar-light);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: var(--background-color-dark);
+    --element-color: var(--element-color-dark);
+    --font-color: var(--font-color-dark);
+    --border-color: var(--border-color-dark);
+    --progress-bg: var(--progress-bg-dark);
+    --progress-bar: var(--progress-bar-dark);
+  }
+}
+
+/* General Styles */
 body {
-  background-color: var(--bg-color);
-  color: var(--primary-color);
+  background: var(--background-color);
+  color: var(--font-color);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+  transition: background 0.3s ease, color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 
-/* Input, button, and other interactive elements */
-input,
-textarea,
-select,
+/* Form Layout */
+form {
+  background: var(--element-color);
+  padding: 2em;
+  border-radius: 0.5em;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+input[type="text"], input[type="datetime-local"] {
+  width: 100%;
+  padding: 0.75em;
+  border-radius: 0.25em;
+  border: 1px solid var(--border-color);
+  background: var(--element-color);
+  color: var(--font-color);
+}
+
+input[type="submit"] {
+  align-self: center;
+  background: var(--progress-bar);
+  color: #ffffff;
+  border: none;
+  padding: 0.75em 2em;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+input[type="submit"]:hover {
+  background: var(--font-color);
+  color: var(--background-color);
+}
+
+/* Achieved Goals Table */
+.achieved-goals {
+  margin-top: 2em;
+  width: 100%;
+  max-width: 600px;
+  background: var(--element-color);
+  border-radius: 0.5em;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1em;
+}
+
+/* Apply styles to buttons and input elements */
+button, input, textarea, select {
+  font-size: 16px;
+  border: 1px solid var(--border-color);
+  box-sizing: border-box;
+  border-radius: 0.25em;
+  padding: 0.75em 1.5em;
+  margin: 0.5em 0;
+  display: inline-block;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border 0.2s ease;
+  background: var(--element-color);
+  color: var(--font-color);
+}
+
 button {
-  background-color: var(--secondary-color);
-  color: var(--primary-color);
-  border: 1px solid var(--accent-color);
-  border-radius: var(--border-radius);
-  padding: var(--padding);
-  transition: background-color 0.3s, border-color 0.3s;
+  font-weight: bold;
 }
 
-/* Hover and focus effects */
-input:focus,
-textarea:focus,
-select:focus,
-button:hover {
-  background-color: var(--accent-color);
-  border-color: var(--primary-color);
+button:hover, input:hover, textarea:hover, select:hover {
+  background: var(--font-color);
+  color: var(--background-color);
+}
+
+input:focus, textarea:focus, select:focus {
   outline: none;
+  border-color: var(--font-color);
 }
 
-/* Links */
-a {
-  color: var(--primary-color);
-  text-decoration: underline;
-}
-
-a:hover {
-  color: var(--accent-color);
-}
-
-
+/* Progress Bar Styles */
 .progress {
   height: 20px;
   margin-bottom: 20px;
   overflow: hidden;
-  background-color: #f5f5f5;
-  border-radius: 4px;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+  background-color: var(--progress-bg);
+  border-radius: 10px;
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2);
   position: relative;
 }
 
 .progress-bar {
-  float: left;
   width: 0%;
   height: 100%;
-  font-size: 12px;
-  line-height: 20px;
-  color: #fff;
-  text-align: center;
-  background-color: #337ab7;
-  box-shadow: inset 0 -1px 0 rgba(0,0,0,.15);
-  /*transition: width .6s ease;*/
+  background-color: var(--progress-bar);
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  transition: width 0.6s ease;
+  position: relative;
   z-index: 1;
 }
 
-.progress-bar::before {
+.progress-bar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
+  background-size: 1rem 1rem;
+  opacity: 0.1;
+  z-index: 2;
+}
+
+.progress::before {
   content: "";
   position: absolute;
   top: 0;
@@ -94,7 +188,7 @@ a:hover {
   justify-content: space-between;
 }
 
-.progress-bar::before {
+.progress::before {
   background-image: linear-gradient(
     to right,
     rgba(0, 0, 0, 0.2) 1px,
@@ -103,6 +197,16 @@ a:hover {
   background-size: 10% 100%
 }
 
+/* Links */
+a {
+  color: var(--font-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--element-color);
+}
 @keyframes bar {
   from {
     width: 0;
