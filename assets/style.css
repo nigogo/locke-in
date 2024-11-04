@@ -7,7 +7,7 @@
   --color-primary: #ffb74d;   /* Warm yellow for primary actions */
   --color-secondary: #f0a500; /* Bright secondary for highlights */
   --color-accent: #ff495c;    /* Strong accent color for special elements */
-  --color-text-primary: #1a1a1a; /* Dark primary text color for contrast */
+  --color-text-primary: #333; /* Dark primary text color for contrast */
   --color-text-secondary: #333333; /* Slightly lighter secondary text color */
   --color-border: #b0c4de;    /* Border color to match light contrast */
   --color-progress-bg: #dce5f3; /* Light blue background for progress bar */
@@ -36,11 +36,7 @@ radial-gradient(at 41% 35%, hsla(56,99%,77%,1) 0px, transparent 50%);
 
 /* General Styles */
 body {
-  background-color:#af99ff;
-  background-image:
-  radial-gradient(at 34% 7%, hsla(271,83%,79%,1) 0px, transparent 80%),
-  radial-gradient(at 54% 92%, hsla(175,85%,62%,1) 0px, transparent 80%),
-  radial-gradient(at 41% 35%, hsla(56,99%,77%,1) 0px, transparent 80%);
+  background-color: var(--color-background);
   color: var(--color-text-primary);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
@@ -56,46 +52,19 @@ body {
 
 /* Form Layout */
 form {
-  background: var(--color-surface);
   padding: 2em;
   border-radius: 0.5em;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 400px;
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 1em;
-  border: 4px solid hsla(0, 0%, 100%, 0.4);
-  box-shadow: inset 3px -5px 0 hsla(0, 0%, 0%, 0.3), 0 3px 4px 0 hsla(0, 0%, 0%, 0.2);
 }
 
 label {
   font-weight: bold;
+  text-transform: uppercase;
   margin-bottom: 0.5em;
-}
-
-input[type="text"], input[type="datetime-local"] {
-  width: 100%;
-  padding: 0.75em;
-  border-radius: 0.25em;
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  color: var(--color-text-primary);
-}
-
-input[type="submit"] {
-  align-self: center;
-  background: var(--color-primary);
-  color: #ffffff;
-  border: none;
-  padding: 0.75em 2em;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-input[type="submit"]:hover {
-  background: var(--color-accent);
-  color: #ffffff;
 }
 
 /* Achieved Goals Table */
@@ -107,26 +76,6 @@ input[type="submit"]:hover {
   border-radius: 0.5em;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 1em;
-}
-
-/* Apply styles to buttons and input elements */
-input, textarea, select {
-  font-size: 16px;
-  border: 1px solid var(--color-border);
-  box-sizing: border-box;
-  border-radius: 0.25em;
-  padding: 0.75em 1.5em;
-  margin: 0.5em 0;
-  display: inline-block;
-  cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease, border 0.2s ease;
-  background: var(--color-surface);
-  color: var(--color-text-primary);
-}
-
-input:focus, textarea:focus, select:focus {
-  outline: none;
-  border-color: var(--color-accent);
 }
 
 /* Progress Bar Styles */

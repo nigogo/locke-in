@@ -5,7 +5,7 @@ import "github.com/nigogo/locke-in/services"
 templ GoalForm(achievedGoals []services.Goal) {
   @Index() {
     <form action="/goal" method="post" hx-post="/goal" hx-push-url="true" hx-target="body">
-      <label for="name">Achieve this:</label>
+      <label for="name">Do this:</label>
       <input type="text" id="name" name="name"/>
       <label for="deadline">By then:</label>
       <input type="datetime-local" id="deadline" name="endDate" value="2024-11-03T20:25"/>
