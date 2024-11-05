@@ -33,6 +33,7 @@ templ Goal(goal services.Goal, achievedGoals []services.Goal) {
                 on load
                   if %t
                     set *width to "100%%"
+                    add .completed to my parentElement
                   else
                     set nowDate to Date.now()
                     set startDate to "%d"
@@ -42,7 +43,7 @@ templ Goal(goal services.Goal, achievedGoals []services.Goal) {
                     set *width to currentPercent %%
                     then wait 20ms
                     set remainingTime to endDate - Date.now()
-                    then transition *width to "100%%" using "all " + remainingTime + "ms linear"
+                    then transition *width to "98%%" using "all " + remainingTime + "ms linear"
               `,
                 goal.Completed,
                 goal.StartDate.Unix() * 1000,

@@ -5,7 +5,7 @@
   --button-hover-bg-color: hsl(0, 0%, 80%);
   --button-active-bg-color: hsl(0, 0%, 60%);
   --button-shadow-color: hsla(0, 0%, 0%, 0.2);
-  --focus-outline: 3px solid #FFA69E;
+  --focus-outline: 3px solid var(--color-accent);
 }
 
 button, input {

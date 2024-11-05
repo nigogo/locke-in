@@ -123,6 +123,7 @@ func Goal(goal services.Goal, achievedGoals []services.Goal) templ.Component {
                 on load
                   if %t
                     set *width to "100%%"
+                    add .completed to my parentElement
                   else
                     set nowDate to Date.now()
                     set startDate to "%d"
@@ -132,14 +133,14 @@ func Goal(goal services.Goal, achievedGoals []services.Goal) templ.Component {
                     set *width to currentPercent %%
                     then wait 20ms
                     set remainingTime to endDate - Date.now()
-                    then transition *width to "100%%" using "all " + remainingTime + "ms linear"
+                    then transition *width to "98%%" using "all " + remainingTime + "ms linear"
               `,
 					goal.Completed,
 					goal.StartDate.Unix()*1000,
 					goal.EndDate.Unix()*1000,
 				))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/goal.templ`, Line: 50, Col: 15}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/goal.templ`, Line: 51, Col: 15}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 			if templ_7745c5c3_Err != nil {
@@ -162,7 +163,7 @@ func Goal(goal services.Goal, achievedGoals []services.Goal) templ.Component {
 				var templ_7745c5c3_Var8 string
 				templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs("/goal/" + goal.ID)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/goal.templ`, Line: 60, Col: 47}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/goal.templ`, Line: 61, Col: 47}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 				if templ_7745c5c3_Err != nil {
