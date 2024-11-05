@@ -179,7 +179,7 @@ func Goal(goal services.Goal, achievedGoals []services.Goal) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			if len(achievedGoals) > 0 {
-				templ_7745c5c3_Err = GoalTable(achievedGoals).Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = GoalHistory(achievedGoals).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}

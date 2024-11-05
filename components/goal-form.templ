@@ -12,7 +12,7 @@ templ GoalForm(achievedGoals []services.Goal) {
       <input type="submit" value="Set Goal" class="mt-2-rem" />
     </form>
     if len(achievedGoals) > 0 {
-      @GoalTable(achievedGoals)
+      @GoalHistory(achievedGoals)
     }
   }
 }
