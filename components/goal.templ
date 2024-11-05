@@ -61,9 +61,9 @@ templ Goal(goal services.Goal, achievedGoals []services.Goal) {
           <button hx-patch={ "/goal/" + goal.ID } hx-push-url="true" hx-target="body">Done!</button>
         }
       </p>
-      if len(achievedGoals) > 0 {
-        @GoalHistory(achievedGoals)
-      }
 		</div>
+    if len(achievedGoals) > 0 {
+      @GoalHistory(achievedGoals)
+    }
 	}
 }

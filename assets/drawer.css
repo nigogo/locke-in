@@ -31,10 +31,21 @@
   top: 0;
   left: 50%;
   transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1); /* Custom snappy bezier */
-  transform: translate(-50%, -4rem);
-  z-index: 11; /* Ensure it's above the drawer */
+  transform: translate(-50%, -70px);
+  z-index: 11; 
 }
 
 .drawer.open > button {
-  transform: translate(-50%, -1rem);
+  transform: translate(-50%, -22px);
+}
+
+.drawer > button::before {
+  content: "▲";
+  display: inline-block;
+  margin-right: 8px;
+  transition: transform 0.1s;
+}
+
+.drawer.open > button::before {
+  transform: rotate(180deg);
 }

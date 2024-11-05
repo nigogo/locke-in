@@ -43,3 +43,23 @@ input:not([type="submit"]) {
 button:focus-visible, input:focus-visible {
   outline: var(--focus-outline);
 }
+
+.pop-in {
+  transform-origin: center;
+  animation: popIn 1s linear forwards;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  60% {
+    transform : scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
