@@ -3,21 +3,24 @@ package views
 import "github.com/nigogo/locke-in/services"
 
 templ GoalHistory(goals []services.Goal) {
-  <table>
-    <thead>
+  <div class="drawer">
+    <button _="on click toggle .open on my parentElement">Open</button>
+    <table>
+      <thead>
       <tr>
-        <th>Goal</th>
-        <th>Achieved</th>
+      <th>Goal</th>
+      <th>Achieved</th>
       </tr>
-    </thead>
-    <tbody>
-    for _, goal := range goals {
-      <tr>
-        <td>{ goal.Name }</td>
-        // TODO: Needs an AchievedAt here
-        <td>{ goal.EndDate.String() }</td>
-      </tr>
-    }
-  </tbody>
+      </thead>
+      <tbody>
+      for _, goal := range goals {
+        <tr>
+          <td>{ goal.Name }</td>
+          // TODO: Needs an AchievedAt here
+          <td>{ goal.EndDate.String() }</td>
+          </tr>
+      }
+      </tbody>
     </table>
+  </div>
 }

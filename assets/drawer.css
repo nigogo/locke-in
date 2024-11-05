@@ -1,0 +1,40 @@
+:root {
+  --button-border-color: hsla(0, 0%, 0%, 0.5);
+}
+
+/* Drawer container */
+.drawer {
+  position: fixed;
+  bottom: 0;
+  width: 90%;  /* Small space between screen borders and drawer */
+  max-width: 600px; /* Limit the drawer to a reasonable size */
+  height: 50vh; /* Drawer will take up 50% of the viewport height */
+  background: #fff;
+  border: 2px solid var(--button-border-color);
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  box-shadow: 0 0 4px 0 var(--button-shadow-color);
+  padding: 2rem 1rem;
+  transform: translateY(100%); /* Start off-screen below */
+  transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1); /* Custom snappy bezier */
+  z-index: 10;
+}
+
+/* Open drawer transformation */
+.drawer.open {
+  transform: translateY(50%); /* Moves into view when toggled */
+}
+
+/* Drawer button */
+.drawer > button {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1); /* Custom snappy bezier */
+  transform: translate(-50%, -4rem);
+  z-index: 11; /* Ensure it's above the drawer */
+}
+
+.drawer.open > button {
+  transform: translate(-50%, -1rem);
+}
