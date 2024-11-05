@@ -7,9 +7,9 @@ templ GoalForm(achievedGoals []services.Goal) {
     <form action="/goal" method="post" hx-post="/goal" hx-push-url="true" hx-target="body">
       <label for="name">Do this:</label>
       <input type="text" id="name" name="name"/>
-      <label for="deadline">By then:</label>
+      <label for="deadline" class="mt-1-rem">By then:</label>
       <input type="datetime-local" id="deadline" name="endDate" value="2024-11-03T20:25"/>
-      <input type="submit" value="Submit"/>
+      <input type="submit" value="Set Goal" class="mt-2-rem" />
     </form>
     if len(achievedGoals) > 0 {
       @GoalTable(achievedGoals)
