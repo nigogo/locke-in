@@ -17,10 +17,9 @@ templ GoalHistory(goals []services.Goal) {
       <tbody>
       for _, goal := range goals {
         <tr>
-          <td>{ goal.Name }</td>
-          // TODO: Needs an AchievedAt here
-          <td>{ goal.EndDate.String() }</td>
-          </tr>
+          <td><a href={ templ.URL("/goal/" + goal.ID) }>{ goal.Name }</a></td>
+          <td><a href={ templ.URL("/goal/" + goal.ID) }>{ goal.EndDate.String() }</a></td>
+        </tr>
       }
       </tbody>
     </table>

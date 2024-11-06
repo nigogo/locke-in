@@ -8,6 +8,18 @@
   --focus-outline: 3px solid var(--color-accent);
 }
 
+/*TODO: Fix dark mode styles and use global variables for colors*/
+@media (prefers-color-scheme: dark) {
+  :root {
+    --button-bg-color: hsl(0, 0%, 20%);
+    --button-text-color: hsla(0, 0%, 0%, 0.6);
+    --button-border-color: hsla(0, 0%, 0%, 0.5);
+    --button-hover-bg-color: hsl(0, 0%, 80%);
+    --button-active-bg-color: hsl(0, 0%, 60%);
+    --button-shadow-color: hsla(0, 0%, 0%, 0.2);
+  }
+}
+
 button, input {
   background-color: var(--button-bg-color);
   border: 2px solid var(--button-border-color);
@@ -44,6 +56,7 @@ button:focus-visible, input:focus-visible {
   outline: var(--focus-outline);
 }
 
+/*TODO: Use this to pop in the drawer button when history is available*/
 .pop-in {
   transform-origin: center;
   animation: popIn 1s linear forwards;

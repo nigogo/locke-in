@@ -14,7 +14,7 @@
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
   box-shadow: 0 0 4px 0 var(--button-shadow-color);
-  padding: 2rem 1rem;
+  padding: 2rem 1rem 0.5rem 1rem; 
   transform: translateY(100%); /* Start off-screen below */
   transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1); /* Custom snappy bezier */
   z-index: 10;
@@ -22,7 +22,7 @@
 
 /* Open drawer transformation */
 .drawer.open {
-  transform: translateY(50%); /* Moves into view when toggled */
+  transform: translateY(0%); /* Moves into view when toggled */
 }
 
 /* Drawer button */
