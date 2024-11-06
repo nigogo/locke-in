@@ -1,21 +1,22 @@
 package main
 
 import (
-	"log"
 	"net/http"
 	"time"
 
 	"github.com/google/uuid"
 
 	views "github.com/nigogo/locke-in/components"
+	"github.com/nigogo/locke-in/db"
 	services "github.com/nigogo/locke-in/services"
 
 	"github.com/nigogo/locke-in/renderer"
 
 	"github.com/gin-gonic/gin"
-	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
+
+var DB *gorm.DB
 
 func setupRouter() *gin.Engine {
 	r := gin.Default()
@@ -98,20 +99,12 @@ func setupRouter() *gin.Engine {
 	})
 
 	r.GET("/goals", func(c *gin.Context) {
-		log.Println("Getting all goals")
-
-		activeGoal, err := services.GetActiveGoal()
+		goals, err := services.GetGoals()
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"could not get goals": err.Error()})
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "could not get goals"})
 		}
 
-		var allGoals []services.Goal
-		allGoals, err = services.GetGoals()
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"could not get goals": err.Error()})
-		}
-
-		res := renderer.New(c.Request.Context(), http.StatusOK, views.Goal(*activeGoal, allGoals))
+		res := renderer.New(c.Request.Context(), http.StatusOK, views.GoalTable(goals))
 		c.Render(http.StatusOK, res)
 	})
 
@@ -123,13 +116,12 @@ func setupRouter() *gin.Engine {
 	return r
 }
 
-func main() {
-	db, err := gorm.Open(sqlite.Open("locke-in.db"), &gorm.Config{})
-	if err != nil {
-		panic("failed to connect database")
-	}
-	db.AutoMigrate(&services.Goal{})
+func init() {
+	DB = db.GetDB()
+	DB.AutoMigrate(&services.Goal{})
+}
 
+func main() {
 	r := setupRouter()
 	ginHtmlRenderer := r.HTMLRender
 	r.HTMLRender = &renderer.HTMLTemplRenderer{FallbackHtmlRenderer: ginHtmlRenderer}

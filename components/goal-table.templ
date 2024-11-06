@@ -1,0 +1,26 @@
+package views
+
+import "github.com/nigogo/locke-in/services"
+
+templ GoalTable(goals []services.Goal) {
+  @Index() {
+    <div class="panel" style="width:90%; height:90%">
+      <table>
+        <thead>
+        <tr>
+        <th>Goal</th>
+        <th>Achieved</th>
+        </tr>
+        </thead>
+        <tbody>
+        for _, goal := range goals {
+          <tr>
+            <td><a href={ templ.URL("/goal/" + goal.ID) }>{ goal.Name }</a></td>
+            <td><a href={ templ.URL("/goal/" + goal.ID) }>{ goal.EndDate.String() }</a></td>
+          </tr>
+        }
+        </tbody>
+      </table>
+    </div>
+  }
+}

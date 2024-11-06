@@ -1,10 +1,10 @@
 package services
 
 import (
-	"encoding/json"
 	"fmt"
-	"log"
 	"time"
+
+	"github.com/nigogo/locke-in/db"
 )
 
 type Goal struct {
@@ -15,80 +15,46 @@ type Goal struct {
 	Completed bool      `form:"completed"`
 }
 
-var db = make(map[string]string)
-
-// GetGoals parses all goals from db and returns a slice of goals and an error if parsing fails.
 func GetGoals() ([]Goal, error) {
 	var goals []Goal
-	for _, goalJSON := range db {
-		var goal Goal
-		if err := json.Unmarshal([]byte(goalJSON), &goal); err != nil {
-			return nil, fmt.Errorf("failed to unmarshal goal: %w", err)
-		}
-		goals = append(goals, goal)
+	result := db.GetDB().Find(&goals)
+	if result.Error != nil {
+		return nil, fmt.Errorf("failed to get goals: %w", result.Error)
 	}
 	return goals, nil
 }
 
 func GetGoal(id string) (Goal, error) {
-	goalJSON, ok := db[id]
-	if !ok {
-		return Goal{}, fmt.Errorf("goal not found")
-	}
 	var goal Goal
-	if err := json.Unmarshal([]byte(goalJSON), &goal); err != nil {
-		return Goal{}, fmt.Errorf("failed to unmarshal goal: %w", err)
+	result := db.GetDB().First(&goal, "id = ?", id)
+	if result.Error != nil {
+		return Goal{}, fmt.Errorf("failed to get goal: %w", result.Error)
 	}
 	return goal, nil
 }
 
-// GetActiveGoal returns a pointer to the first active goal, or nil if none is found.
 func GetActiveGoal() (*Goal, error) {
-	goals, err := GetGoals()
-	if err != nil {
-		return nil, err
+	var goal Goal
+	result := db.GetDB().First(&goal, "completed = ?", false)
+	if result.Error != nil {
+		return nil, fmt.Errorf("failed to get active goal: %w", result.Error)
 	}
-
-	for i := range goals {
-		if !goals[i].Completed {
-			return &goals[i], nil
-		}
-	}
-	return nil, nil // No active goal found
+	return &goal, nil
 }
 
-// GetCompletedGoals filters and returns all completed goals.
 func GetCompletedGoals() ([]Goal, error) {
-	goals, err := GetGoals()
-	if err != nil {
-		return nil, err
+	var goals []Goal
+	result := db.GetDB().Find(&goals, "completed = ?", true)
+	if result.Error != nil {
+		return nil, fmt.Errorf("failed to get completed goals: %w", result.Error)
 	}
-
-	log.Printf("goals: %v", goals)
-
-	completedGoals := make([]Goal, 0, len(goals))
-	for _, goal := range goals {
-		if goal.Completed {
-			completedGoals = append(completedGoals, goal)
-		}
-	}
-
-	log.Printf("completed goals: %v", completedGoals)
-
-	// log all GetCompletedGoals
-	for i, goal := range completedGoals {
-		log.Printf("completed goal %d: %v", i, goal)
-	}
-
-	return completedGoals, nil
+	return goals, nil
 }
 
 func StoreGoal(goal Goal) error {
-	goalJson, err := json.Marshal(goal)
-	if err != nil {
-		return fmt.Errorf("failed to marshal goal: %w", err)
+	result := db.GetDB().Save(&goal)
+	if result.Error != nil {
+		return fmt.Errorf("failed to store goal: %w", result.Error)
 	}
-
-	db[goal.ID] = string(goalJson)
 	return nil
 }
