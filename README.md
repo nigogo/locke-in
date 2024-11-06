@@ -1,5 +1,9 @@
-# locke-in
+# LockeIn
 Set a goal, pick a time, work on it and watch others achieve their goals.
+
+## Demo
+This has been recorded on 2024-11-06 and might not reflect the current progress of LockeIn. See for yourself ;)
+[locke_in_demo.webm](https://github.com/user-attachments/assets/b4fddc63-3809-4e58-a9be-cd3c6b24050a)
 
 ## Usage
 
