@@ -36,3 +36,7 @@ coverage.out
 # Workspace-related files
 go.work
 go.work.sum
+
+# Database
+*.sqlite
+*.db
